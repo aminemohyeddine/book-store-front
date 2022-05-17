@@ -117,7 +117,7 @@ const NavBar: React.FC<Props> = () => {
                 fontSize={isLargerThan930 ? "20px" : "17px"}
                 bg="white"
               >
-                Book's Universe
+                Book's Universea
               </Text>
             </Link>
           </>
@@ -141,7 +141,7 @@ const NavBar: React.FC<Props> = () => {
                 fontSize={isLargerThan930 ? "20px" : "17px"}
                 bg="white"
               >
-                Book's Universe - admin mode
+                Book's Universea - admin mode
               </Text>
             </Link>
           </>
