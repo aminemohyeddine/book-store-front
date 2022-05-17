@@ -1,0 +1,20 @@
+.carousel-container {
+  background-color: rgb(241, 241, 241);
+  padding-left: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  z-index: 10;
+}
+
+.custom-dot-list-style {
+  color: red;
+  left: 0px;
+  background-color: red;
+}
+
+.amine {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: relative;
+}

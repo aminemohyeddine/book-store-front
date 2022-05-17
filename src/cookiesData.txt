@@ -1,0 +1,8 @@
+adminLoogedin = boolean;
+cart : array;
+googleUser : user;
+login : success || failed;
+loginMode : google || normal;
+userDetails : user;
+userId : string;
+userToken : string;

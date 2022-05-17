@@ -1,0 +1,16 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.carousel-container {
+  margin-left: 3%;
+  margin-right: 3%;
+  display: flex;
+}
+
+.carousel-item-padding-40-px {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}
