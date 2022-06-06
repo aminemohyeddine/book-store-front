@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Box, Text, Button } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
@@ -25,13 +25,16 @@ const ReviewForm: React.FC<Props> = ({ setStep }) => {
   const shippingDetails: any = details[0].adress;
 
   const totalCount = () => {
+    console.log("total changed");
+
     let totalPrice: number = 0;
     cart.forEach((book: BookI) => {
       totalPrice = totalPrice + book.price;
     });
     setTotal(totalPrice);
   };
-  React.useEffect(() => {
+
+  useMemo(() => {
     totalCount();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cart]);

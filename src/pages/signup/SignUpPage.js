@@ -123,7 +123,7 @@ const SignUp = () => {
                           cursor="pointer"
                           color="black"
                         >
-                          Sign Up To Book's Universe
+                          Sign Up To Books Universe
                         </Text>
                         <Text>{response}</Text>
                       </Box>

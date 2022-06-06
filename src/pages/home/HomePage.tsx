@@ -9,8 +9,10 @@ import BookInList from "./components/BookInList";
 import BooksPlans from "./components/BooksPlans";
 
 const Home = () => {
-  const booksState: any = useSelector((state: RootState) => state.Books);
-  const booksList: BookI[] = booksState.booksData;
+  const booksList: any = useSelector(
+    (state: RootState) => state.Books.booksData
+  );
+
   var audioBook = require("../../assets/Gateway_Audiobooks-_2_.webp");
   var quoteBook = require("../../assets/Gateway_Quote_A4_03-29 (1).webp");
 
@@ -56,15 +58,14 @@ const Home = () => {
           <Text
             w="100%"
             textAlign="center"
-            mt="20px"
-            mb="40px"
+            mt="5px"
+            mb="5px"
             fontSize="2xl"
             cursor="pointer"
-            paddingTop="40px"
-            color="white"
+            color="black"
             textShadow="1px 0 0 #329793, 0 -1px 0 #329793, 0 1px 0 #329793, -1px 0 0 #329793"
           >
-            We Give You The Access To Undless Books
+            We Give You Access To The Most Readable Books
           </Text>
           <Box
             w="100%"
@@ -73,7 +74,7 @@ const Home = () => {
             justifyContent="center"
           >
             <Box flexWrap="wrap" justifyContent="center" display="flex">
-              {booksList.slice(0, 5)?.map((book, key) => (
+              {booksList.slice(0, 8)?.map((book: any, key: any) => (
                 <Box key={key}>
                   <BookInList book={book} />
                 </Box>

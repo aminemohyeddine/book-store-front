@@ -3,4 +3,5 @@ export enum CartContants {
   addCartFromLocalStorage = "addCartFromLocalStorage",
   DeleteBookFromCart = "DeleteBookFromCart",
   deleteAllBooksFromCart = "deleteAllBooksFromCart",
+  cartState = "cartState",
 }

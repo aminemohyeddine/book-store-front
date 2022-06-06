@@ -28,6 +28,15 @@ export const deleteAllBooksFromCart = () => {
   };
 };
 
+export const changeCartState = (state: boolean) => {
+  return (dispatch: Dispatch<any>) => {
+    dispatch({
+      type: CartContants.cartState,
+      payload: { state },
+    });
+  };
+};
+
 export const addCartFromLocalStorage = (cartItems: BookI[]) => {
   return (dispatch: Dispatch<any>) => {
     dispatch({

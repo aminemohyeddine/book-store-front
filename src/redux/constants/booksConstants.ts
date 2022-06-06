@@ -3,5 +3,7 @@ export enum BooksConst {
   getBook = "getBook",
   searchBook = "searchBook",
   deleteBook = "deleteBook",
-  bookStateHasChanged = "bookStateHasChanged",
+  filterModeIsOn = "filterModeIsOn",
+  filterModeIsOff = "filterModeIsOff",
+  filterBooks = "filterBooks",
 }

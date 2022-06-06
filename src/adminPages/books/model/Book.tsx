@@ -83,9 +83,12 @@ const Book: React.FC<Props> = ({ book }) => {
           w="50%"
           cursor="pointer"
         >
-          <Text mr="8px" color="white" fontSize="xs">
+          <a
+            style={{ color: "white", fontSize: "12px", marginRight: "8px" }}
+            href={`/admin/books/modify/${book._id}`}
+          >
             ModifyBook
-          </Text>
+          </a>
 
           <Icon color="white" fontSize="xs" as={EditIcon} />
         </Box>

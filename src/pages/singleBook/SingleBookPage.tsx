@@ -27,11 +27,9 @@ const SingleBook: React.FC<Props> = () => {
 
   const [loading, setLoading] = useState<boolean>(true);
 
-  const stateData: any = useSelector((state: RootState) => state.Books);
-  const books: BookI[] = stateData.booksData;
+  const books: any = useSelector((state: RootState) => state.Books.booksData);
 
-  const state: any = useSelector((state: RootState) => state.Books);
-  const book: BookI = state.singleBook[0];
+  const book: any = useSelector((state: RootState) => state.Books.singleBook);
 
   const [isLargerThan868] = useMediaQuery("(min-width: 1055px)");
 
@@ -85,7 +83,12 @@ const SingleBook: React.FC<Props> = () => {
             alignItems={isLargerThan868 ? "" : "center"}
           >
             <Box width="300px" position="relative">
-              <img alt="image2" height="300px" width="300px" src={book.image} />
+              <img
+                alt="image2"
+                height="300px"
+                width="300px"
+                src={book[0].image}
+              />
             </Box>
           </Box>
           <Box
@@ -96,14 +99,15 @@ const SingleBook: React.FC<Props> = () => {
           >
             <Text
               w="80%"
-              mt="10px"
+              mt={isLargerThan500 ? "10px" : "30px"}
               cursor="pointer"
               fontSize={isLargerThan868 ? "32px" : "20px"}
               fontFamily="GT Super Bold, serif"
               letterSpacing="1.5px"
               fontWeight="bold"
+              textAlign={isLargerThan868 ? "left" : "center"}
             >
-              {book.name}
+              {book[0].name}
             </Text>
             <Box mt="20px" display="flex">
               <Text
@@ -111,7 +115,7 @@ const SingleBook: React.FC<Props> = () => {
                 cursor="pointer"
                 fontSize="1xl"
               >
-                {book.category} (category)
+                {book[0].category} (category)
               </Text>
               <Center mt="8px" mr="10px" ml="10px" height="14px">
                 <Divider bg="#2e9894" orientation="vertical" />
@@ -122,13 +126,13 @@ const SingleBook: React.FC<Props> = () => {
                 fontSize="1xl"
                 // color=""
               >
-                {book.author} (Author)
+                {book[0].author} (Author)
               </Text>
             </Box>
             <Box display="flex" mt="7px">
               {[...Array(starsLimit)].map((elementInArray, index) => (
                 <Box key={index}>
-                  {index + 1 < book.rating ? (
+                  {index + 1 < book[0].rating ? (
                     <>
                       <StarIcon key={index} color="yellow" />
                     </>
@@ -146,14 +150,14 @@ const SingleBook: React.FC<Props> = () => {
               w="70%"
               fontSize="1xl"
               dangerouslySetInnerHTML={{
-                __html: book.description.split(".").join(". <br />"),
+                __html: book[0].description.split(". ").join(". <br />"),
               }}
             >
-              {/* {book.description.split(".").join("<br />")} */}
+              {/* {book[0].description.split(".").join("<br />")} */}
             </Text>
             <Box display="flex" mt="20px" w="70%" fontSize="1xl">
               <Text>Language</Text>
-              {book.language === "English" ? (
+              {book[0].language === "English" ? (
                 <Image
                   ml="20px"
                   cursor="pointer"
@@ -165,12 +169,12 @@ const SingleBook: React.FC<Props> = () => {
                   alt="Dan Abramov"
                 />
               ) : (
-                <Text>{book.language}</Text>
+                <Text>{book[0].language}</Text>
               )}
             </Box>
 
             <Text mt="20px" w="70%" fontSize="1xl">
-              {book.pagesNumber} page
+              {book[0].pagesNumber} page
             </Text>
             <Box
               display="flex"
@@ -187,11 +191,11 @@ const SingleBook: React.FC<Props> = () => {
                 p="5px"
                 fontSize={isLargerThan500 ? "2xl" : "lg"}
               >
-                {book.price} {book.currency}
+                {book[0].price} {book[0].currency}
               </Text>
               <button
                 onClick={() => {
-                  dispatch(addBookToCart(book._id, books));
+                  dispatch(addBookToCart(book[0]._id, books));
                 }}
                 className="cta"
               >

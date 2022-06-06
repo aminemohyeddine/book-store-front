@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useRef } from "react";
 import { ChakraProvider, theme } from "@chakra-ui/react";
 import Cookies from "universal-cookie";
 import axios from "axios";
@@ -6,6 +7,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { NavBarComponent, FooterComponent } from "./components";
 import CheckoutPage from "./pages/checkout/CheckOutPage";
 import AddBookAdmin from "./adminPages/books/AddBookAdmin.tsx";
+import LogRocket from "logrocket";
 import { BookI } from "./constants/interfaces.ts";
 
 //admin pages
@@ -34,6 +36,7 @@ import {
   fillUserDetails,
   loginMode,
 } from "./redux/actions/loginActions/loginActions";
+import FilterBooksSection from "./pages/books/FilterBooksSection.tsx";
 
 export const App = () => {
   const cookies = new Cookies();
@@ -41,37 +44,22 @@ export const App = () => {
   const userToken = cookies.get("userToken");
 
   const loginState = useSelector((state: RootState) => state.loginStates);
-  const userLoggedIn: boolean = loginState.userLoggedIn;
   const trackLogin: boolean = loginState.trackLogIn;
-  // const loginMode: string = loginState.loginMode;
 
-  const cartState: any = useSelector((state: RootState) => state.cart);
-  const cart: BookI[] = cartState.cart;
-
-  React.useLayoutEffect(() => {
-    if (cart.length > 0) {
-      const realCart = JSON.stringify(cart);
-      cookies.set("cart", realCart, { path: "/" });
-    }
-    if (cart.length === 0 && userLoggedIn) {
-      cookies.set("cart", [], { path: "/" });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cart]);
+  // const books: any = useSelector((state: RootState) => state.Books.booksData);
 
   React.useEffect(() => {
-    const cartItems = cookies.get("cart");
+    const cartItems = localStorage.getItem("cart");
 
-    if (cartItems !== undefined && cartItems.length > 0) {
-      dispatch(addCartFromLocalStorage(cartItems));
+    if (cartItems !== null) {
+      if (cartItems.length > 0) {
+        dispatch(addCartFromLocalStorage(JSON.parse(cartItems)));
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchBooks = async () => {
-    const userToken = cookies.get("userToken");
-    // console.log(loginMode);
-
     const response = await axios.request({
       method: "GET",
       url: `${process.env.REACT_APP_BACKEND_URL}books/allbooks`,
@@ -163,7 +151,15 @@ export const App = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/books" element={<BooksPage />} />
+          <Route
+            path="/books"
+            element={
+              <>
+                <FilterBooksSection />
+                <BooksPage />
+              </>
+            }
+          />
           <Route path="/admin/login" element={<AdminLoginPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
@@ -171,7 +167,6 @@ export const App = () => {
           <Route path="/admin/books" element={<ListBooksAdmin />} />
           <Route path="/admin/books/modify/:id" element={<ModifyBookAdmin />} />
           <Route path="/admin/books/addbook" element={<AddBookAdmin />} />
-
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Router>

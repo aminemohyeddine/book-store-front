@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import { Box, Text, Image, Button } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -6,26 +6,22 @@ import { BookI } from "../../../constants/interfaces";
 import {
   DeleteBookFromCart,
   deleteAllBooksFromCart,
+  changeCartState,
 } from "../../../redux/actions/cartActions/cartActions";
 
 interface Props {
   cartBooks: any;
-  setIsCart: any;
 }
-const CartList: React.FC<Props> = ({ cartBooks, setIsCart }) => {
+const CartList: React.FC<Props> = ({ cartBooks }) => {
   const dispatch = useDispatch();
-
-  const [total, setTotal] = useState<number>(0);
-  const totalCount = () => {
+  const [number, setNumber] = useState<number>(0);
+  const totalCount = useMemo(() => {
     let totalPrice = 0;
     cartBooks.forEach((book: BookI) => {
       totalPrice = totalPrice + book.price;
     });
-    setTotal(totalPrice);
-  };
-  useEffect(() => {
-    totalCount();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    return totalPrice.toFixed(2);
   }, [cartBooks]);
 
   return (
@@ -52,6 +48,7 @@ const CartList: React.FC<Props> = ({ cartBooks, setIsCart }) => {
     >
       {cartBooks.length === 0 ? (
         <Box
+          className="cartList"
           display="flex"
           alignItems="center"
           flexDirection="column"
@@ -76,7 +73,8 @@ const CartList: React.FC<Props> = ({ cartBooks, setIsCart }) => {
               fontSize="20px"
               color="black"
               onClick={() => {
-                setIsCart(false);
+                dispatch(changeCartState(false));
+                // setIsCart(false);
               }}
             >
               Shop
@@ -85,7 +83,7 @@ const CartList: React.FC<Props> = ({ cartBooks, setIsCart }) => {
         </Box>
       ) : (
         <>
-          <Box w="100%" mt="10px">
+          <Box className="cartList" w="100%" mt="10px">
             <Box
               w="90%"
               display="flex"
@@ -100,7 +98,8 @@ const CartList: React.FC<Props> = ({ cartBooks, setIsCart }) => {
               <Text
                 onClick={() => {
                   dispatch(deleteAllBooksFromCart());
-                  setIsCart(false);
+                  dispatch(changeCartState(false));
+                  // setIsCart(false);
                 }}
                 cursor="pointer"
                 textDecoration="underline"
@@ -159,7 +158,8 @@ const CartList: React.FC<Props> = ({ cartBooks, setIsCart }) => {
                       color="#16a9f7"
                       cursor="pointer"
                       onClick={() => {
-                        setIsCart(false);
+                        dispatch(changeCartState(false));
+                        // setIsCart(false);
                       }}
                     >
                       Details
@@ -201,14 +201,22 @@ const CartList: React.FC<Props> = ({ cartBooks, setIsCart }) => {
                 </Box>
                 <Box mt="17px" mr="20px">
                   <Text fontSize="17px" fontWeight="bold" color="black">
-                    ${total.toFixed(2)}
+                    ${totalCount}
                   </Text>
                 </Box>
               </Box>
+              <button
+                onClick={() => {
+                  setNumber(number + 1);
+                }}
+              >
+                {number}
+              </button>
               <Link to={"/checkout"}>
                 <Button
                   onClick={() => {
-                    setIsCart(false);
+                    dispatch(changeCartState(false));
+                    // setIsCart(false);
                   }}
                   color="black"
                   w="160px"

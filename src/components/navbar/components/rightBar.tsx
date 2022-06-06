@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Text,
@@ -28,13 +28,12 @@ import SearchBookComponent from "./searchBook";
 import { BookI } from "../../../constants/interfaces";
 import { RootState } from "../../../redux/store";
 import { userI } from "../../../constants/interfaces";
+import { searchBook } from "../../../redux/actions/booksActions.ts/booksActions";
 
-interface Props {
-  setSearchedBook: any;
-  searchBook: any;
-}
+interface Props {}
 
-const RightBar: React.FC<Props> = ({ setSearchedBook, searchBook }) => {
+const RightBar: React.FC<Props> = () => {
+  const [searchedBook, setSearchedBook] = useState("");
   const cookies = new Cookies();
   const btnRef = React.useRef<HTMLButtonElement | null>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -44,8 +43,13 @@ const RightBar: React.FC<Props> = ({ setSearchedBook, searchBook }) => {
   const user: userI = loginStates.user;
   const userLoggedIn: boolean = loginStates.userLoggedIn;
 
-  const stateData: any = useSelector((state: RootState) => state.Books);
-  const filteredBooks: BookI[] = stateData.filtredBooks;
+  const filteredBooks: any = useSelector(
+    (state: RootState) => state.Books.filtredBooksBysearch
+  );
+
+  const allBooks: any = useSelector(
+    (state: RootState) => state.Books.booksData
+  );
 
   const changeSearchBooks = (event: any) => {
     setSearchedBook(event.target.value);
@@ -63,6 +67,11 @@ const RightBar: React.FC<Props> = ({ setSearchedBook, searchBook }) => {
     dispatch(loginMode(""));
     onClose();
   };
+
+  useEffect(() => {
+    dispatch(searchBook(allBooks, searchedBook));
+    console.log("searchedBook");
+  }, [searchedBook]); //eslint-disable-line
 
   return (
     <Box cursor="pointer" mr={0}>

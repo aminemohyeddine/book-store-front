@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Text, useMediaQuery, Image } from "@chakra-ui/react";
+import { Box, useMediaQuery, Image } from "@chakra-ui/react";
 import { BookI } from "../../../constants/interfaces";
 import { Link } from "react-router-dom";
 
@@ -27,21 +27,14 @@ const BookInList: React.FC<Props> = ({ book }) => {
         <Image
           style={{ borderRadius: "100%" }}
           height={
-            isLargerThan828 ? "170px" : isLargerThan470 ? "120px" : "80px"
+            isLargerThan828 ? "200px" : isLargerThan470 ? "150px" : "100px"
           }
-          width={isLargerThan828 ? "170px" : isLargerThan470 ? "120px" : "80px"}
+          width={
+            isLargerThan828 ? "200px" : isLargerThan470 ? "150px" : "100px"
+          }
           src={book.image}
           alt="book"
         />
-        <Text
-          _hover={{ color: "#bee2f8" }}
-          color="white"
-          cursor="pointer"
-          mt="10px"
-          bg="transparent"
-        >
-          {book.name.substring(0, 16)}
-        </Text>
       </Box>
     </Link>
   );

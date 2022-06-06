@@ -7,26 +7,31 @@ interface booksAction {
     | BooksConst.searchBook
     | BooksConst.getBook
     | BooksConst.deleteBook
-    | BooksConst.bookStateHasChanged;
+    | BooksConst.filterModeIsOn
+    | BooksConst.filterBooks
+    | BooksConst.filterModeIsOff;
   payload: any;
 }
 
 export const getBooks = (
   state = {
     booksData: [],
-    filtredBooks: [],
+    filtredBooksBysearch: [],
     singleBook: {},
-    bookStateHasChanged: false,
+    filtredMode: false,
+    filtredBooks: [],
   },
   action: booksAction
 ) => {
   switch (action.type) {
     case BooksConst.getAllBooks:
       return { ...state, booksData: action.payload };
+    case BooksConst.filterBooks:
+      return { ...state, filtredBooks: action.payload.books };
     case BooksConst.searchBook:
       return {
         ...state,
-        filtredBooks:
+        filtredBooksBysearch:
           action.payload.bookName === ""
             ? []
             : action.payload.allBooks.filter((book: BookI) => {
@@ -52,10 +57,15 @@ export const getBooks = (
         }),
       };
 
-    case "bookStateHasChanged":
+    case "filterModeIsOn":
       return {
         ...state,
-        bookStateHasChanged: !state.bookStateHasChanged,
+        filtredMode: true,
+      };
+    case "filterModeIsOff":
+      return {
+        ...state,
+        filtredMode: false,
       };
     default:
       return state;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Box, Text, Image } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
@@ -16,8 +16,9 @@ interface Props {
 const Book: React.FC<Props> = ({ book }) => {
   const dispatch = useDispatch();
 
-  const booksState: any = useSelector((state: RootState) => state.Books);
-  const allBooks: BookI[] = booksState.booksData;
+  const allBooks: any = useSelector(
+    (state: RootState) => state.Books.booksData
+  );
 
   const starsLimit = 5;
   const link = "/book/" + book._id;
@@ -77,15 +78,6 @@ const Book: React.FC<Props> = ({ book }) => {
           {book.currency}
         </Text>
         &nbsp; &nbsp;
-        <Image
-          style={{ cursor: "pointer" }}
-          height="22px"
-          width="17px"
-          src={
-            "https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg"
-          }
-          alt="Dan Abramov"
-        />
       </Box>
 
       <Box position="relative">
@@ -100,6 +92,8 @@ const Book: React.FC<Props> = ({ book }) => {
           alt="cart image"
           onClick={() => {
             dispatch(addBookToCart(book._id, allBooks));
+
+            //
             // toast({
             //   title: "Book added To Cart",
             //   description: "We've Added Your Book To Cart",
@@ -114,4 +108,4 @@ const Book: React.FC<Props> = ({ book }) => {
   );
 };
 
-export default Book;
+export default React.memo(Book);

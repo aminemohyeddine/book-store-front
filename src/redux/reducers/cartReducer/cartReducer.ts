@@ -6,11 +6,16 @@ interface cartAction {
     | CartContants.addBookToCart
     | CartContants.addCartFromLocalStorage
     | CartContants.DeleteBookFromCart
-    | CartContants.deleteAllBooksFromCart;
+    | CartContants.deleteAllBooksFromCart
+    | CartContants.cartState;
+
   payload: any;
   cartItems: any;
 }
-export const cartReducer = (state = { cart: [] }, action: cartAction) => {
+export const cartReducer = (
+  state = { cart: [], cartState: false },
+  action: cartAction
+) => {
   switch (action.type) {
     case CartContants.addBookToCart:
       const targetBook = action.payload.books.find(
@@ -32,6 +37,11 @@ export const cartReducer = (state = { cart: [] }, action: cartAction) => {
       return {
         ...state,
         cart: action.cartItems,
+      };
+    case CartContants.cartState:
+      return {
+        ...state,
+        cartState: action.payload.state,
       };
     case CartContants.DeleteBookFromCart:
       return {

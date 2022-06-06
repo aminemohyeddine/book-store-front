@@ -34,6 +34,33 @@ export const getBook = (bookId: string | undefined) => {
   };
 };
 
+export const filterBooks = (books: BookI[]) => {
+  return (dispatch: Dispatch<any>) => {
+    dispatch({
+      type: BooksConst.filterBooks,
+      payload: {
+        books,
+      },
+    });
+  };
+};
+
+export const filterModeIsOn = () => {
+  return (dispatch: Dispatch<any>) => {
+    dispatch({
+      type: BooksConst.filterModeIsOn,
+    });
+  };
+};
+
+export const filterModeIsOff = () => {
+  return (dispatch: Dispatch<any>) => {
+    dispatch({
+      type: BooksConst.filterModeIsOff,
+    });
+  };
+};
+
 export const deleteBook = (bookId: string | undefined) => {
   return (dispatch: Dispatch<any>) => {
     dispatch({

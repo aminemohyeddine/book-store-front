@@ -9,9 +9,7 @@ import Cookies from "universal-cookie";
 const ListBooksAdmin = () => {
   const cookies = new Cookies();
   const loginMode = cookies.get("loginMode");
-
-  const bookState: any = useSelector((state: RootState) => state.Books);
-  const books: BookI[] = bookState.booksData;
+  const books: any = useSelector((state: RootState) => state.Books.booksData);
 
   return (
     <>
